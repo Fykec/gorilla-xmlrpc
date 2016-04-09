@@ -13,11 +13,16 @@ import (
 )
 
 func rpcRequest2XML(method string, rpc interface{}) (string, error) {
+	var err error
+
 	buffer := "<methodCall><methodName>"
 	buffer += method
 	buffer += "</methodName>"
-	params, err := rpcParams2XML(rpc)
-	buffer += params
+	if rpc != nil {
+		var params string
+		params, err = rpcParams2XML(rpc)
+		buffer += params
+	}
 	buffer += "</methodCall>"
 	return buffer, err
 }
